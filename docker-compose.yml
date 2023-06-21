@@ -1,0 +1,51 @@
+version: "4.1"
+services:
+    Auth:
+      container_name: auth-service
+      build: ./auth
+      ports:
+        - "8081:8081"
+      hostname: authentification
+      environment:
+        - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      image: "auth-service"
+      depends_on:
+        - Eureka
+
+    Gateway:
+      container_name: api-gateway
+      build: ./api-gateway
+      ports:
+        - "8054:8054"
+      hostname: api-gateway
+      environment:
+        - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      image: "api-gateway"
+      depends_on:
+        - Eureka
+    Eureka:
+      container_name: eureka
+      build: ./eureka-server
+      ports:
+        - "8761:8761"
+      hostname: eureka-server
+      image: "eureka-server"
+      environment:
+        - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    configserver:
+      container_name: configserver
+      build: ./config
+      ports:
+        - "8888:8888"
+      hostname: configserver
+      image: "configserver"
+      environment:
+        - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    Mongo:
+        container_name: Mongo
+        image: "mongo:5-focal"
+        ports:
+          - "27017:27017"
+        hostname: mongodb
+        depends_on:
+          - "Eureka"
