@@ -83,7 +83,7 @@ services:
       build: ./js/api
       ports:
         - "3000:3000"
-      hostname: trafic-service
+      hostname: trafic
       environment:
         - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=eureka-server
       image: trafic-service
@@ -96,7 +96,7 @@ services:
       build: ./js/front
       ports:
         - "3001:3001"
-      hostname: front-service
+      hostname: front
       environment:
         - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=eureka-server
       image: front-service
