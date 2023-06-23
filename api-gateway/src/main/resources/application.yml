@@ -13,8 +13,22 @@ spring:
             allowed-methods: "*"
             allowed-headers: "*"
       routes:
+        - id: flight-service
+          uri: lb://flight-service
+          predicates:
+            - Path=/flights/**
+        - id : crew-service
+          uri: lb://crew-service
+          predicates:
+            - Path=/crew/**
         - id : auth-service
           uri: lb://auth-service
+          predicates:
+            - Path=/v1/**
+        - id: node-service
+          uri: lb://node-service
+          predicates:
+            - Path=/api/**
 
 eureka:
   instance:
