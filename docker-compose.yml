@@ -78,3 +78,16 @@ services:
       depends_on:
         - Eureka
         - configserver
+    trafic-service:
+      container_name: trafic-service
+      build: ./js/api
+      ports:
+        - "3000:3000"
+      hostname: trafic
+      environment:
+        - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=eureka-server
+      image: trafic-service
+      depends_on:
+        - Eureka
+        - Mongo
+      command: "node ./server.js"
